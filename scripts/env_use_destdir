@@ -21,7 +21,13 @@ if [ -z "${DESTDIR:-}" ] ; then
     exit 1
 fi
 
-export LD_LIBRARY_PATH="$DESTDIR/usr/lib:$DESTDIR/lib"
+if [ -n "${LD_LIBRARY_PATH:-}" ] ; then
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$DESTDIR/usr/lib:$DESTDIR/lib"
+else
+    LD_LIBRARY_PATH="$DESTDIR/usr/lib:$DESTDIR/lib"
+fi
+
+export LD_LIBRARY_PATH
 if [ -n "${PREFIX:-}" ] ; then
     LD_LIBRARY_PATH="$DESTDIR$PREFIX/lib:$LD_LIBRARY_PATH"
 fi
